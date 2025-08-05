@@ -24,6 +24,7 @@ BRANCH_TERM="";
 if [ "$BRANCH" == "main" ]; then
     BRANCH_TERM="main"
 else
+    git fetch origin main
     BRANCH_TERM="main..$(git branch --show-current)"
 fi
 
