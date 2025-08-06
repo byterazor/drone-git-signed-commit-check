@@ -9,24 +9,19 @@ if [ -z ${PLUGIN_MAX_NR_COMMITS} ]; then
     PLUGIN_MAX_NR_COMMITS=30
 fi
 
-if [ -z ${PLUGIN_BRANCH} ]; then
-    echo "Error: please set the BRANCH parameter to the branch to check for signed commits"
+if [ -z ${PLUGIN_MAIN_BRANCH} ]; then
+    echo "Error: please set the MAIN_BRANCH parameter to your used main/master branch."
     exit 255
 fi
 
 
 ACTION=${PLUGIN_ACTION}
 LAST_NR_COMMITS_TO_CHECK=${PLUGIN_MAX_NR_COMMITS}
-BRANCH=${PLUGIN_BRANCH}
+MAIN_BRANCH=${PLUGIN_MAIN_BRANCH}
 
 BRANCH_TERM="";
 
-if [ "$BRANCH" == "main" ]; then
-    BRANCH_TERM="main"
-else
-    git fetch origin main
-    BRANCH_TERM="origin/main..$(git branch --show-current)"
-fi
+BRANCH=$(git branch --show-current)
 
 export GNUPGHOME=/home/gpg/
 
@@ -43,13 +38,12 @@ hasSignature() {
     fi
 }
 
-COMMITS=$(git log --no-merges --oneline --decorate ${BRANCH_TERM} | awk '{print $1}')
+COMMITS=$(git log HEAD --no-merges --oneline --not origin/${MAIN_BRANCH} -n ${LAST_NR_COMMITS_TO_CHECK}| awk '{print $1}')
 
 NO_SIG=0
 VERIFY_FAILED=0
 
 for c in $COMMITS; do
-
     hasSignature $c
     if [ $? -eq 1 ]; then
         git verify-commit "$c" >/dev/null 2>&1
