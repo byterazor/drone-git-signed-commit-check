@@ -25,7 +25,7 @@ if [ "$BRANCH" == "main" ]; then
     BRANCH_TERM="main"
 else
     git fetch origin main
-    BRANCH_TERM="main..$(git branch --show-current)"
+    BRANCH_TERM="origin/main..$(git branch --show-current)"
 fi
 
 export GNUPGHOME=/home/gpg/
