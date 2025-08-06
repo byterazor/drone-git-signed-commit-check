@@ -36,7 +36,7 @@ your business on this image.
 
 ## Source Repository
 
-* https://gitea.federationhq.de/Container/ddrone-git-signed-commit-check
+* https://gitea.federationhq.de/Container/drone-git-signed-commit-check
 
 ## Project Homepage
 
@@ -44,7 +44,7 @@ your business on this image.
 
 ## Prebuild Images
 
-* https://hub.docker.com/repository/docker/byterazor/drone-git-signed-commit-check/general
+* https://hub.docker.com/repository/docker/byterazor/drone-git-signed-commit-check
 
 ## Authors
 
